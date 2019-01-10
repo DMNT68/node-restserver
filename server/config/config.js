@@ -1,5 +1,26 @@
     /**
-     * puerto
+     * PUERTO
+     */
+    process.env.PORT = process.env.PORT || 3000;
+
+
+
+    /**
+     * ENTORNO
+     */
+    process.env.NODE_ENV = process.env.NODE_ENV || 'dev';
+
+
+    /**
+     * BASE DE DATOS
      */
 
-    process.env.PORT = process.env.PORT || 3000
+    let urlDB;
+
+    if (process.env.NODE_ENV === 'dev') {
+        urlDB = 'mongodb://localhost:27017/cafe';
+    } else {
+        urlDB = 'mongodb://usuario-cafe:qwerty0@ds049466.mlab.com:49466/cafe';
+    }
+
+    process.env.URLDB = urlDB;
