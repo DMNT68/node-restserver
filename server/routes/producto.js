@@ -201,8 +201,7 @@ app.put('/productos/:id', verificaToken, (req, res) => {
     let id = req.params.id;
     let body = req.body;
 
-
-    Producto.findById(id, (err, productoDB) => {
+    Categoria.findById(_idCategoria, (err, categoriaDB) => {
 
         if (err) {
             return res.status(500).json({
@@ -211,32 +210,52 @@ app.put('/productos/:id', verificaToken, (req, res) => {
             });
         }
 
-        if (!productoDB) {
+        if (!categoriaDB) {
             return res.status(400).json({
                 ok: false,
-                err
+                err: {
+                    message: 'No existe la categoria'
+                }
             });
         }
 
-        productoDB.nombre = body.nombre;
-        productoDB.precioUni = body.precioUni;
-        productoDB.categoria = body.categoria;
-        productoDB.disponible = body.disponible;
-        productoDB.descripcion = body.descripcion;
+        Producto.findById(id, (err, productoDB) => {
 
-        productoDB.save((err, productoGuardado) => {
-
-            if (!productoGuardado) {
+            if (err) {
                 return res.status(500).json({
                     ok: false,
                     err
                 });
             }
 
-            res.json({
-                ok: true,
-                productoGuardado,
-                mensaje: 'Producto actualizado'
+            if (!productoDB) {
+                return res.status(400).json({
+                    ok: false,
+                    err
+                });
+            }
+
+            productoDB.nombre = body.nombre;
+            productoDB.precioUni = body.precioUni;
+            productoDB.categoria = body.categoria;
+            productoDB.disponible = body.disponible;
+            productoDB.descripcion = body.descripcion;
+
+            productoDB.save((err, productoGuardado) => {
+
+                if (!productoGuardado) {
+                    return res.status(500).json({
+                        ok: false,
+                        err
+                    });
+                }
+
+                res.json({
+                    ok: true,
+                    productoGuardado,
+                    mensaje: 'Producto actualizado'
+                });
+
             });
 
         });
