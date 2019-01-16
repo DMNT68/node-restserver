@@ -5,6 +5,7 @@ const { verificaToken } = require('../middlewares/autenticacion');
 let app = express();
 
 let Producto = require('../models/producto');
+let Categoria = require('../models/categoria');
 
 /** 
  * Obtener productos 
@@ -140,16 +141,9 @@ app.post('/productos', verificaToken, (req, res) => {
 
     let body = req.body;
 
-    let producto = new Producto({
-        nombre: body.nombre,
-        precioUni: body.precioUni,
-        descripcion: body.descripcion,
-        disponible: body.disponible,
-        categoria: body.categoria,
-        usuario: req.usuario._id
-    });
+    let _idCategoria = body.categoria;
 
-    producto.save((err, productoDB) => {
+    Categoria.findById(_idCategoria, (err, categoriaDB) => {
 
         if (err) {
             return res.status(500).json({
@@ -158,13 +152,41 @@ app.post('/productos', verificaToken, (req, res) => {
             });
         }
 
-        res.status(201).json({
-            ok: true,
-            productoDB
+        if (!categoriaDB) {
+            return res.status(400).json({
+                ok: false,
+                err: {
+                    message: 'No existe la categoria'
+                }
+            });
+        }
+
+        let producto = new Producto({
+            nombre: body.nombre,
+            precioUni: body.precioUni,
+            descripcion: body.descripcion,
+            disponible: body.disponible,
+            categoria: body.categoria,
+            usuario: req.usuario._id
+        });
+
+        producto.save((err, productoDB) => {
+
+            if (err) {
+                return res.status(500).json({
+                    ok: false,
+                    err
+                });
+            }
+
+            res.status(201).json({
+                ok: true,
+                productoDB
+            });
+
         });
 
     });
-
 
 });
 
