@@ -181,7 +181,8 @@ app.post('/productos', verificaToken, (req, res) => {
 
             res.status(201).json({
                 ok: true,
-                productoDB
+                productoDB,
+                mensaje: 'Producto creado'
             });
 
         });
@@ -233,7 +234,8 @@ app.put('/productos/:id', verificaToken, (req, res) => {
 
             res.json({
                 ok: true,
-                productoGuardado
+                productoGuardado,
+                mensaje: 'Producto actualizado'
             });
 
         });
@@ -282,7 +284,7 @@ app.delete('/productos/:id', verificaToken, (req, res) => {
 
             res.json({
                 ok: true,
-                productoBorrado,
+                producto: productoBorrado,
                 mensaje: 'Producto borrado'
             });
         });
