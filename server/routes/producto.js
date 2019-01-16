@@ -143,6 +143,7 @@ app.post('/productos', verificaToken, (req, res) => {
 
     let _idCategoria = body.categoria;
 
+    //verifica si existe la categoria
     Categoria.findById(_idCategoria, (err, categoriaDB) => {
 
         if (err) {
