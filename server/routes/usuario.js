@@ -7,9 +7,6 @@ const { verificaToken, verificaAdmin_Role } = require('../middlewares/autenticac
 const app = express();
 
 
-
-
-
 /**
  *  Lee los registros de la BDD
  */
@@ -42,8 +39,6 @@ app.get('/usuario', verificaToken, (req, res) => {
                 });
             });
 
-
-
         });
 
 });
@@ -51,7 +46,7 @@ app.get('/usuario', verificaToken, (req, res) => {
 
 
 /**
- * Registra la base de datos
+ * Crea o Registra un nuevo usuario en la base de datos
  */
 app.post('/usuario', [verificaToken, verificaAdmin_Role], (req, res) => {
 
@@ -120,6 +115,7 @@ app.put('/usuario/:id', [verificaToken, verificaAdmin_Role], (req, res) => {
  * Desactiva el estado del usuario, semenjante a eliminar un registro pero en esta método solo lo desactiva
  */
 app.delete('/usuario/:id', [verificaToken, verificaAdmin_Role], (req, res) => {
+
     let id = req.params.id;
 
     let cambiaEstado = {
@@ -151,9 +147,6 @@ app.delete('/usuario/:id', [verificaToken, verificaAdmin_Role], (req, res) => {
         });
 
     });
-
-
-
 
 });
 
