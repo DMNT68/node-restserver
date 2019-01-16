@@ -200,6 +200,7 @@ app.put('/productos/:id', verificaToken, (req, res) => {
 
     let id = req.params.id;
     let body = req.body;
+    let _idCategoria = body.categoria;
 
     Categoria.findById(_idCategoria, (err, categoriaDB) => {
 
