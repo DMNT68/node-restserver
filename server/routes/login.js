@@ -31,7 +31,6 @@ app.post('/login', (req, res) => {
             });
         }
 
-
         if (!bcrypjs.compareSync(body.password, usuarioDB.password)) {
             return res.status(400).json({
                 ok: false,
