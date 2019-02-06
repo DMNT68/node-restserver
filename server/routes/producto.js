@@ -23,7 +23,7 @@ app.get('/productos', verificaToken, (req, res) => {
 
     Producto.find({ disponible: true })
         .sort('nombre')
-        .populate('usuario categoria', 'nombre email')
+        .populate('usuario ', 'nombre email')
         .populate('categoria', 'descripcion')
         .skip(desde)
         .limit(limite)
